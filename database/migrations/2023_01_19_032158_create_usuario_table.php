@@ -13,13 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('usuario', function (Blueprint $table) {
+        Schema::create('rol', function (Blueprint $table) {
             $table->smallIncrements('id');
             $table->string('nombre_rol', 50);
             $table->tinyInteger('is_activo')->default(1);
-            $table->unsignedSmallInteger('usuario_id')->nullable();
+            $table->unsignedSmallInteger('rol_id')->nullable();
             $table->timestamps();
-            $table->foreign('usuario_id')->references('id')->on('usuario')
+            $table->foreign('rol_id')->references('id')->on('rol')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
         });
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('usuario');
+        Schema::dropIfExists('rol');
     }
 };
