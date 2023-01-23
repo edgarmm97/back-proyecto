@@ -20,8 +20,18 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::group(['prefix' => 'nodo'], function () {
+    
     Route::get('/index', [UsuarioController::class, 'index']);
+    
     Route::post('/create', [UsuarioController::class, 'storage']);
+
+    Route::post('/update', [UsuarioController::class, 'update']);
+
+    Route::post('/create/relacion', [UsuarioController::class, 'addRelacion']);
+    
     Route::delete('/delete/{id}', [UsuarioController::class, 'destroy']);
+
+    Route::delete('/delete/relacion/{id}', [UsuarioController::class, 'destroyRelacion']);
+
 });
 

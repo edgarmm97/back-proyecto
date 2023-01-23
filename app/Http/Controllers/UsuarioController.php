@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-
 //Uso del modelo Usuario
 use App\Models\Usuario;
 
@@ -16,10 +15,18 @@ class UsuarioController extends Controller{
         try {
             $roles = Usuario::where('is_activo', '!=', '0')->get();
 
-            return response()->json($roles, 200);
+            $edges = Usuario::select('rol.id', 'rol.nombre_rol', 't2.id as id2', 't2.nombre_rol as nombre_rol_target')
+            ->where('rol.is_activo', '!=' , '0')
+            ->join('rol as t2', 'rol.rol_id', '=', 't2.id')
+            ->get();
+
+            return response()->json([
+                'nodes' => $roles,
+                'edges' => $edges
+            ], 200);
 
         } catch (\Throwable $th) {
-            //throw $th;
+            throw $th;
 
             return response()->json(["msg" => "Ocurrio un error en el servidor"], 500);
 
@@ -33,7 +40,7 @@ class UsuarioController extends Controller{
             'rol_id' => 'nullable|integer',
             'nombre_rol' => 'required',
         ]);
-
+        
         if($validator->fails()){
             return response()->json($validator->errors(), 400);
         }
@@ -46,7 +53,7 @@ class UsuarioController extends Controller{
             ]);
 
         } catch (\Throwable $th) {
-            //throw $th;
+            throw $th;
 
             return response()->json(["msg" => "Ocurrio un error en el servidor"], 500);
         }
@@ -66,6 +73,47 @@ class UsuarioController extends Controller{
         }
 
         return response()->json(["msg" => "Nodo eliminado con éxito"], 201);
+
+    }
+
+    public function update(Request $request){
+
+        try {
+            
+            Usuario::where('id', '=', $request->id)->update(['nombre_rol' => $request->nombre_rol]);
+        
+        } catch (\Throwable $th) {
+        
+            throw $th;
+        
+        }
+
+        return response()->json(["msg" => "Nodo actualizado con éxito"], 201);
+
+    }
+
+    public function addRelacion(Request $request){
+
+        try {
+            Usuario::where('id', '=', $request->id)->update(['rol_id' => $request->id_rol]);
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+
+        return response()->json(["msg" => "Relación actualizada con éxito"], 201);
+    }
+
+    public function destroyRelacion(Request $request, $id){
+
+        try {
+            
+            Usuario::where('id', '=', $id)->update(['rol_id' => null]);
+
+        } catch (\Throwable $th) {
+            return response()->json(["msg" => "Ocurrio un error en el servidor"], 500);
+        }
+
+        return response()->json(["msg" => "Relación eliminada con éxito"], 201);
 
     }
 
