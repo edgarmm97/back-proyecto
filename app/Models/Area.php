@@ -9,8 +9,8 @@ class Area extends Model
 {
     use HasFactory;
 
-    protected $table = "areas";
+    protected $table = "cat_area";
 
-    protected $fillable = ['area','description'];
+    protected $fillable = ['area','description','is_deleted'];
 
 }

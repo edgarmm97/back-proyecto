@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\AreaController;
+use App\Http\Controllers\SerieDocumentalController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -33,6 +34,12 @@ Route::group(['prefix' => 'nodo'], function () {
     Route::delete('/delete/{id}', [UsuarioController::class, 'destroy']);
 
     Route::delete('/delete/relacion/{id}', [UsuarioController::class, 'destroyRelacion']);
+
+});
+
+Route::group(['prefix' => 'serie-documental'], function(){
+
+    Route::get('/', [SerieDocumentalController::class, 'index']);
 
 });
 
