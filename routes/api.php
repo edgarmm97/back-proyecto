@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\AreaController;
+use App\Http\Controllers\TableareaController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -25,6 +26,5 @@ Route::group(['prefix' => 'nodo'], function () {
     Route::post('/create', [UsuarioController::class, 'storage']);
     Route::delete('/delete/{id}', [UsuarioController::class, 'destroy']);
 });
-
 Route::apiResource('areas', AreaController::class);
-
+Route::apiResource('tableareas',TableareaController::class);

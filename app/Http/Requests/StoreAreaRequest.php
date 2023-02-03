@@ -24,7 +24,7 @@ class StoreAreaRequest extends FormRequest
     public function rules()
     {
         return [
-            "area"=>"required|unique: areas|area",
+            "area"=>"required",
             "description"=> "required"
         ];
     }
