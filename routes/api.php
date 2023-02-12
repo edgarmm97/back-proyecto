@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\AreaController;
+use App\Http\Controllers\TableareaController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -35,6 +36,5 @@ Route::group(['prefix' => 'nodo'], function () {
     Route::delete('/delete/relacion/{id}', [UsuarioController::class, 'destroyRelacion']);
 
 });
-
 Route::apiResource('areas', AreaController::class);
-
+Route::apiResource('tableareas',TableareaController::class);
